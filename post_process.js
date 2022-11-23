@@ -15,14 +15,16 @@ function test(trs){
   return;
 }
 
-function myFunction() {
-    //document.getElementById("myTable").deleteRow(0);
-	var tables = document.getElementsByTagName('table');
-    //console.log(tables);
-	if(tables.length > 0){
-		for (var i = 0; i < tables.length; i++){
-			var trs = tables[i].getElementsByTagName('tr');
-            test(trs);
+function filterCommands(type) {
+    if(type != "all"){
+        //document.getElementById("myTable").deleteRow(0);
+	    var tables = document.getElementsByTagName('table');
+        //console.log(tables);
+	    if(tables.length > 0){
+		    for (var i = 0; i < tables.length; i++){
+			    var trs = tables[i].getElementsByTagName('tr');
+                test(trs);
+            }
         }
     }
 }
@@ -64,7 +66,61 @@ function loadJS(FILE_URL, async = true) {
   });
 }
 
+function createLink(ref, text) {
+    // Create anchor element.
+    var a = document.createElement('a'); 
+                  
+    // Create the text node for anchor element.
+    var link = document.createTextNode(text);
+                  
+    // Append the text node to anchor element.
+    a.appendChild(link); 
+                  
+    // Set the title.
+    //a.title = "This is Link"; 
+                  
+    // Set the href property.
+    a.href = ref; 
+                  
+    // Append the anchor element to the body.
+    document.body.prepend(a); 
+}
+
 $(document).ready(function() {
-    myFunction(); 
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var type = url.searchParams.get("type");
+
+    filterCommands(type);
+
+    var part1 = '';
+    var part2 = '';
+    if(url_string.includes('#') && url_string.includes('?')){
+        part1 = url_string.split('?')[0];
+        part2 = '#'+url_string.split('#')[1];
+    } else if (url_string.includes('#') && !url_string.includes('?')){
+        part1 = url_string.split('#')[0];
+        part2 = '#'+url_string.split('#')[1];
+    } else if (!url_string.includes('#') && url_string.includes('?')){
+        part1 = url_string.split('?')[0];
+        part2 = '';
+    } else {
+        part1 = url_string;
+        part2 = '';    
+    }
+
+
+    if(type != "all"){
+        createLink(part1+"?type=all"+part2, "ALL Page");
+    } else {
+        createLink(part1+"?type=filter"+part2, "Fil Page");
+    }
     //remElems();
+
+});
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    document.querySelector("#loader").style.display = "none";
 });
