@@ -66,5 +66,5 @@ function loadJS(FILE_URL, async = true) {
 
 $(document).ready(function() {
     myFunction(); 
-    remElems();
+    //remElems();
 });
