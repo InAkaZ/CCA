@@ -112,9 +112,9 @@ $(document).ready(function() {
 
 
     if(type != "all"){
-        createLink(part1+"?type=all"+part2, "ALL Page");
+        createLink(part1+"?type=all"+part2, "ALL");
     } else {
-        createLink(part1+"?type=filter"+part2, "Fil Page");
+        createLink(part1+"?type=filter"+part2, "Uncovered");
     }
     //remElems();
 
