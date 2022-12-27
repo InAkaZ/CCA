@@ -16,7 +16,7 @@ function test(trs){
 }
 
 function filterCommands(type) {
-    if(type != "all"){
+    if(type == "filter"){
         //document.getElementById("myTable").deleteRow(0);
 	    var tables = document.getElementsByTagName('table');
         //console.log(tables);
@@ -111,7 +111,7 @@ $(document).ready(function() {
     }
 
 
-    if(type != "all"){
+    if(type == "filter"){
         createLink(part1+"?type=all"+part2, "ALL");
     } else {
         createLink(part1+"?type=filter"+part2, "Uncovered");
