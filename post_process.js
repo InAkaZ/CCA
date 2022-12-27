@@ -116,7 +116,7 @@ $(document).ready(function() {
     } else {
         createLink(part1+"?type=filter"+part2, "Uncovered");
     }
-    //remElems();
+    remElems();
 
 });
 
