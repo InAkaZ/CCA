@@ -15,8 +15,51 @@ function test(trs){
   return;
 }
 
+function removeRow(trs){
+	if(trs.length == 2){
+		return;
+	} else {
+		trs[2].remove();
+		removeRow(trs);
+		//console.log(trs.length);
+	}
+}
+
+function reArrangeRows(type){
+	    if(type == "filter" || type == null){return;}
+	    var tables = document.getElementsByTagName('table');
+	    if(tables.length > 0){
+		    for (var i = 0; i < tables.length; i++){
+                            var greenRows = [];
+                            var redRows = [];
+			    var trs = tables[i].getElementsByTagName('tr');
+
+                            for (var j = 2; j < trs.length; j++){
+                          	if(trs[j].innerHTML.includes("class=\"gt\"")){
+					greenRows.push(trs[j].innerHTML);
+				} else {
+					redRows.push(trs[j].innerHTML);
+				}
+			    }
+
+			    removeRow(trs);
+
+                            for (var j=0; j < redRows.length; j++){
+			    	var row = tables[i].insertRow(-1);
+				row.innerHTML = redRows[j];
+			    }
+
+                            for (var j=0; j < greenRows.length; j++){
+			    	var row = tables[i].insertRow(-1);
+				row.innerHTML = greenRows[j];
+			    }
+                    }
+            }
+}
+
 function filterCommands(type) {
-    if(type == "filter"){
+    console.log(type);
+    if(type == "filter" || type == null){
         //document.getElementById("myTable").deleteRow(0);
 	    var tables = document.getElementsByTagName('table');
         //console.log(tables);
@@ -92,6 +135,9 @@ $(document).ready(function() {
     var url = new URL(url_string);
     var type = url.searchParams.get("type");
 
+    console.log(type == null);
+
+    reArrangeRows(type);
     filterCommands(type);
 
     var part1 = '';
@@ -111,7 +157,7 @@ $(document).ready(function() {
     }
 
 
-    if(type == "filter"){
+    if(type == "filter" || type == null){
         createLink(part1+"?type=all"+part2, "ALL");
     } else {
         createLink(part1+"?type=filter"+part2, "Uncovered");
